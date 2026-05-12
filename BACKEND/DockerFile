@@ -1,15 +1,5 @@
-# 1. Use an official OpenJDK image as the base
-FROM openjdk:17-jdk-slim
-
-# 2. Set working directory inside container
+FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
-
-# 3. Copy Maven build artifact (JAR file) into container
-# (Assumes 'mvn package' is run before building Docker image)
 COPY target/*.jar app.jar
-
-# 4. Expose backend port
 EXPOSE 8080
-
-# 5. Run the Spring Boot app
 ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -1,5 +1,5 @@
-com\example\support\model\Ticket.class
-com\example\support\SupportApplication.class
 com\example\support\controller\TicketController.class
 com\example\support\repository\TicketRepository.class
 com\example\support\service\TicketService.class
+com\example\support\model\Ticket.class
+com\example\support\SupportApplication.class

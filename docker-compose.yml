@@ -1,0 +1,43 @@
+services:
+
+  mysql:
+    image: mysql:8.0
+    container_name: support-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: supportdb
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - support-network
+
+  backend:
+    build: ./BACKEND
+    container_name: support-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    depends_on:
+      - mysql
+    networks:
+      - support-network
+
+  frontend:
+    build: ./FRONTEND
+    container_name: support-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - support-network
+
+volumes:
+  mysql-data:
+
+networks:
+  support-network:
+    driver: bridge
