@@ -1,16 +1,19 @@
 # 🚂 Smart Support Ticketing System
 
-> A full-stack customer support ticket management system built with React + Spring Boot + MySQL.
+> A full-stack customer support ticket management system built with React + Spring Boot + MySQL + Docker.
 
 <div align="center">
 
 ![React](https://img.shields.io/badge/React-19.x-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Vite](https://img.shields.io/badge/Vite-5.x-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8.x-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.5-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
 ![MySQL](https://img.shields.io/badge/MySQL-8.x-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
 ![Java](https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 
 **Developed by [Vignesh Mahendran](https://www.linkedin.com/in/-vignesh-mahendran-/)**
+
+*Every Ticket Finds Its Track. 🚂*
 
 </div>
 
@@ -21,11 +24,12 @@
 | Feature | Description |
 |---|---|
 | 🏠 Home Dashboard | Hero section with animated train, floating tickets, live stats |
-| 🎫 Ticket Management | Create, view, filter, and update support tickets |
+| 🎫 Ticket Management | Create, view, filter, search and update support tickets |
 | 🚂 Train Animation | Moving locomotive with carriages carrying tickets |
-| 📊 Stats Bar | Real-time counts for Total, Open, In Progress, Closed, High Priority |
-| 🔍 Search | Filter tickets by customer name or issue |
-| 🔗 LinkedIn | Developer profile linked in sidebar and hero |
+| 📊 Stats Bar | Real-time counts — Total, Open, In Progress, Closed, High Priority |
+| 🔍 Search | Filter tickets by customer name or issue description |
+| 🐳 Docker | One command to run entire app — Frontend + Backend + MySQL |
+| 🔗 LinkedIn | Developer profile linked in sidebar and hero section |
 
 ---
 
@@ -35,7 +39,8 @@
 | Technology | Version | Purpose |
 |---|---|---|
 | React | 19.x | UI Framework |
-| Vite | 5.x | Build Tool & Dev Server |
+| Vite | 8.x | Build Tool & Dev Server |
+| Nginx | Alpine | Production Web Server (Docker) |
 | DM Sans / DM Mono | Google Fonts | Typography |
 | CSS Animations | — | Train, float, pulse effects |
 
@@ -51,7 +56,14 @@
 ### Database
 | Technology | Version |
 |---|---|
-| MySQL | 8.x |
+| MySQL | 8.0 |
+
+### DevOps
+| Technology | Purpose |
+|---|---|
+| Docker | Containerization |
+| Docker Compose | Multi-container orchestration |
+| Git | Version Control |
 
 ---
 
@@ -72,59 +84,79 @@ SMART SUPPORT TICKETING SYSTEM/
 │   │       │   └── repository/
 │   │       │       └── TicketRepository.java
 │   │       └── resources/
-│   │           └── application.properties
+│   │           ├── application.properties           # Local / XAMPP config
+│   │           └── application-docker.properties    # Docker config
+│   ├── Dockerfile
 │   └── pom.xml
 │
-└── FRONTEND/                         # React + Vite Application
-    ├── src/
-    │   ├── App.jsx                   # Main React component
-    │   ├── styles.css                # All styles + animations
-    │   └── main.jsx                  # React entry point
-    ├── index.html
-    ├── vite.config.js
-    └── package.json
+├── FRONTEND/                         # React + Vite Application
+│   ├── src/
+│   │   ├── App.jsx                   # Main React component
+│   │   ├── styles.css                # All styles + animations
+│   │   └── main.jsx                  # React entry point
+│   ├── index.html
+│   ├── vite.config.js
+│   ├── Dockerfile
+│   └── package.json
+│
+├── docker-compose.yml                # Runs all 3 services together
+└── README.md
 ```
 
 ---
 
-## ⚙️ Setup & Installation
+## 🚀 Running the Project
 
-### Prerequisites
-- Java 17+
-- Node.js 18+
-- MySQL 8.x (via XAMPP or standalone)
-- Maven
+There are **two ways** to run this project:
 
 ---
 
-### 🗄️ Step 1 — Database Setup
+### 🐳 Option 1 — Docker (Recommended)
 
-Start MySQL and run:
+> Runs everything with one command. No need to install MySQL, Java, or Node separately.
 
+**Prerequisites:**
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running
+
+**Step 1 — Build the Backend JAR**
+```bash
+cd BACKEND
+mvn clean package -DskipTests
+cd ..
+```
+
+**Step 2 — Start all services**
+```bash
+docker-compose up --build
+```
+
+**Step 3 — Open browser**
+```
+http://localhost:3000
+```
+
+That's it! Docker starts MySQL + Backend + Frontend automatically. ✅
+
+---
+
+### 💻 Option 2 — Local Development (XAMPP)
+
+**Prerequisites:**
+- Java 17+
+- Node.js 18+
+- XAMPP (MySQL)
+- Maven
+
+**Step 1 — Start MySQL in XAMPP**
+
+Open XAMPP Control Panel → Start MySQL
+
+**Step 2 — Create Database**
 ```sql
 CREATE DATABASE supportdb;
 ```
 
----
-
-### 🔧 Step 2 — Backend Configuration
-
-Open `BACKEND/src/main/resources/application.properties` and set your credentials:
-
-```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/supportdb
-spring.datasource.username=root
-spring.datasource.password=YOUR_PASSWORD
-
-spring.jpa.hibernate.ddl-auto=update
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
-```
-
----
-
-### 🚀 Step 3 — Run the Backend
-
+**Step 3 — Start Backend**
 ```bash
 cd BACKEND
 mvn spring-boot:run
@@ -132,10 +164,7 @@ mvn spring-boot:run
 
 Backend starts at → `http://localhost:8080`
 
----
-
-### 💻 Step 4 — Run the Frontend
-
+**Step 4 — Start Frontend**
 ```bash
 cd FRONTEND
 npm install
@@ -155,7 +184,7 @@ Frontend starts at → `http://localhost:3000`
 | `PATCH` | `/api/tickets/{id}` | Update ticket status |
 | `DELETE` | `/api/tickets/{id}` | Delete a ticket |
 
-### Request Body — Create Ticket
+### Sample Request — Create Ticket
 
 ```json
 {
@@ -167,33 +196,87 @@ Frontend starts at → `http://localhost:3000`
 ```
 
 ### Ticket Status Values
-- `OPEN` — New ticket, not yet assigned
-- `IN_PROGRESS` — Being worked on
-- `CLOSED` — Resolved
+| Value | Meaning |
+|---|---|
+| `OPEN` | New ticket, not yet assigned |
+| `IN_PROGRESS` | Currently being worked on |
+| `CLOSED` | Issue resolved |
 
 ### Priority Values
-- `LOW`
-- `MEDIUM`
-- `HIGH`
+| Value | Meaning |
+|---|---|
+| `LOW` | Non-urgent issue |
+| `MEDIUM` | Normal priority |
+| `HIGH` | Urgent, needs immediate attention |
+
+---
+
+## 🐳 Docker Details
+
+### Services
+
+| Service | Image | Port |
+|---|---|---|
+| `support-mysql` | mysql:8.0 | 3306 |
+| `support-backend` | eclipse-temurin:17-jdk-alpine | 8080 |
+| `support-frontend` | node:18-alpine + nginx:alpine | 3000 |
+
+### Useful Docker Commands
+
+```bash
+# Start all services (first time)
+docker-compose up --build
+
+# Start all services (after first time)
+docker-compose up
+
+# Start in background
+docker-compose up -d
+
+# Stop all services
+docker-compose down
+
+# Stop and delete all data
+docker-compose down -v
+
+# View all logs
+docker-compose logs
+
+# View backend logs only
+docker-compose logs backend
+
+# View running containers
+docker ps
+```
 
 ---
 
 ## ✨ Features
 
-- ✅ Create support tickets with customer name, issue, and priority
+- ✅ Create support tickets with customer name, issue and priority
 - ✅ View all tickets in a responsive card grid
 - ✅ Filter tickets by status (Open / In Progress / Closed)
-- ✅ Search tickets by name or issue
+- ✅ Search tickets by customer name or issue
 - ✅ Update ticket status inline via dropdown
 - ✅ Live stats dashboard (Total, Open, In Progress, Closed, High Priority)
-- ✅ Animated train scene with floating ticket badges
-- ✅ Toast notifications for create/update actions
+- ✅ Animated train scene with floating ticket badges in hero section
+- ✅ Toast notifications for create and update actions
 - ✅ Responsive design (mobile-friendly)
 - ✅ LinkedIn profile integration
+- ✅ Dockerized with docker-compose for one-command deployment
+- ✅ Separate configs for local and Docker environments
 
 ---
 
-## 🐛 Common Issues
+## 🐛 Common Issues & Fixes
+
+### Docker Desktop not running
+```
+error during connect: open //./pipe/dockerDesktopLinuxEngine
+```
+**Fix:** Open Docker Desktop app and wait for the green whale 🐳 in taskbar.
+
+---
 
 ### MySQL won't start (XAMPP)
 ```
@@ -204,7 +287,6 @@ Error: MySQL shutdown unexpectedly
 netstat -ano | findstr :3306
 taskkill /PID <PID_NUMBER> /F
 ```
-Then restart MySQL in XAMPP.
 
 ---
 
@@ -216,13 +298,20 @@ Communications link failure
 
 ---
 
-### Frontend shows blank page
+### Vite not recognized
+```
+'vite' is not recognized as an internal or external command
+```
+**Fix:** Run `npm install` first inside the FRONTEND folder.
+
+---
+
+### Frontend blank page
 **Fix:** Make sure `src/App.jsx` starts with:
 ```js
 import { useEffect, useState } from "react";
 import "./styles.css";
 ```
-Not with `@import url(...)` — that belongs only in `styles.css`.
 
 ---
 
@@ -230,9 +319,12 @@ Not with `@import url(...)` — that belongs only in `styles.css`.
 
 <div align="center">
 
-**Vignesh Mahendran**
+**Vignesh Mahendran R**
+
+Java Backend / Full Stack Developer (Fresher)
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/-vignesh-mahendran-/)
+[![GitHub](https://img.shields.io/badge/GitHub-vicky3004-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/vicky3004)
 
 *Smart Support Ticketing System — Every Ticket Finds Its Track. 🚂*
 
@@ -242,5 +334,5 @@ Not with `@import url(...)` — that belongs only in `styles.css`.
 
 ## 📄 License
 
-This project is for educational and portfolio purposes.  
+This project is for educational and portfolio purposes.
 © 2026 Vignesh Mahendran. All rights reserved.
