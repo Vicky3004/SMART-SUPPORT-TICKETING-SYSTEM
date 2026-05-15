@@ -14,6 +14,7 @@
       <change beforePath="$PROJECT_DIR$/BACKEND/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/BACKEND/DockerFile" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BACKEND/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BACKEND/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/target/classes/application.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BACKEND/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BACKEND/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BACKEND/target/support-1.0.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/BACKEND/target/support-1.0.0.jar" afterDir="false" />
